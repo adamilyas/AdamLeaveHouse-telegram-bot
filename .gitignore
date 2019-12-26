@@ -1,0 +1,7 @@
+# virtualenv
+venv/*
+
+# IDE
+.vscode
+
+__pycache__/*
