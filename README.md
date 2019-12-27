@@ -12,8 +12,11 @@ Methods:
 - `/getUpdates` [GET]
 - `/sendmessage?chat_id=<CHAT_ID>&text=<MESSAGE>` [GET]
 
+## Setup webhook
+`/setWebhook?url=<your webhook>`
+
 ## TODO
-- Tunnelling
+- Tunnelling (For local testing, use `ngrok`)
 - API calls
 - deployment
 - uhhh get a life
