@@ -14,6 +14,7 @@ Methods:
 
 ## Setup webhook
 `/setWebhook?url=<your webhook>`
+`/deleteWebhook`
 
 ## TODO
 - Tunnelling (For local testing, use `ngrok`)
