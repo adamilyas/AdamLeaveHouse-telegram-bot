@@ -6,6 +6,8 @@ import json
 import os
 
 app = Flask(__name__)
+BOT_NAME = 'LeaveHouseBot'
+bot_command = f'@{BOT_NAME}'
 
 # read json
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -32,7 +34,8 @@ for location in locations:
 """
 To do:
 
-Get from locations and use datamall api
+- Make /commands to constants
+- Add inline keyboard
 """
 
 @app.route("/", methods=['GET', 'POST'])
@@ -42,7 +45,15 @@ def main_route():
         app.logger.debug(msg)
 
         chat_id = msg['message']['chat']['id']
-        message_text = msg['message']['text']
+
+        if 'text' in msg['message']:
+            message_text = msg['message']['text']
+        else:
+            message_text = '/help' # default to help
+
+        if bot_command in message_text:
+            message_text.replace(bot_command, "")
+        
         app.logger.debug((chat_id, message_text))
 
         message_to_send = ''
