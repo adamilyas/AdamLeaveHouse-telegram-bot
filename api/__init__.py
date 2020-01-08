@@ -6,6 +6,8 @@ import json
 import os
 
 app = Flask(__name__)
+BOT_NAME = 'LeaveHouseBot'
+bot_command = f'@{BOT_NAME}'
 
 # read json
 dir_path = os.path.dirname(os.path.realpath(__file__))
@@ -121,6 +123,3 @@ def get_details(locations):
         details += f'\n/{location} : {locations[location]}'
 
     return details
-
-if __name__ == "__main__":
-    app.run(port=5000, debug=True)
