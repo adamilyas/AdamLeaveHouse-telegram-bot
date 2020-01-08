@@ -21,3 +21,9 @@ Methods:
 - API calls
 - deployment
 - uhhh get a life
+
+## Heroku Deployment
+List of files required
+- `runtime.txt` to heroku python version
+- `requirements.txt` for python libraries
+- `Procfile` for deployment

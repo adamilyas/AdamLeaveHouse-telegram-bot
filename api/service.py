@@ -1,5 +1,5 @@
 from datetime import datetime
-from config import data_mall_key
+from api.config import data_mall_key
 import requests as rq
 import re
 

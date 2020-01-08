@@ -1,5 +1,5 @@
-from config import query_base
-from service import data_mall_service
+from api.config import *
+from api.service import data_mall_service
 from flask import Flask, request, Response
 import requests as rq
 import json
@@ -32,7 +32,7 @@ for location in locations:
 """
 To do:
 
-Get from locations and use datamall api
+Use DB instead of JSON
 """
 
 @app.route("/", methods=['GET', 'POST'])
@@ -42,23 +42,28 @@ def main_route():
         app.logger.debug(msg)
 
         chat_id = msg['message']['chat']['id']
-        message_text = msg['message']['text']
+        if TEXT in msg['message']:
+            message_text = msg['message']['text']
+        else:
+            message_text = HELP
+
+        message_text = message_text.replace(BOT_NAME, "")
         app.logger.debug((chat_id, message_text))
 
-        message_to_send = ''
-
         # /details
-        if message_text == '/details':
+        if DETAILS in message_text :
             message_to_send = get_details(locations)
 
         # /add
-        elif message_text[:4] == '/add':
+        elif ADD in message_text:
             args = message_text.split(" ")
             app.logger.debug(args)
             if len(args) != 3:
                 message_to_send = "Format: /add <location name> <bus stop id>"
+
             elif args[1] in locations.keys():
                 message_to_send = f'`{args[1]}` already exists. Please use another location name\n\n' + get_details(locations)
+
             else:
                 locations[args[1]] = args[2]
                 with open(file_name, "w") as new_file:
@@ -67,7 +72,7 @@ def main_route():
                 message_to_send = 'Updated Location List\n\n' + get_details(locations)
 
         # /delete
-        elif message_text[:4] == '/del':
+        elif DELETE in message_text:
             args = message_text.split(" ")
             app.logger.debug(args)
             if len(args) != 2:
@@ -83,8 +88,7 @@ def main_route():
 
 
         # /help or /wrongLocation -> help string
-        elif message_text == '/help':
-            app.logger.debug('/help')
+        elif HELP in message_text:
             message_to_send = help_string
 
         # valid location
@@ -93,7 +97,7 @@ def main_route():
             message_to_send = data_mall_service(bus_stop_id)
 
         # /invalid_command or /invalid_location
-        elif  message_text[0] == '/' and message_text[1:] not in locations.keys():
+        elif  message_text[0] == '/':
             message_to_send = help_string
 
         # send message back to me.
