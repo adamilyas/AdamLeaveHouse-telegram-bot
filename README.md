@@ -1,5 +1,7 @@
 # Telegram Bot
 
+## Status : Code is broken.
+
 ## Creating a bot
 Type `/newbot` at [https://telegram.me/botfather](https://telegram.me/botfather)
 
